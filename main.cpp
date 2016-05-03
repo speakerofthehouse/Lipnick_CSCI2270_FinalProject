@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include "rbtree.h"
+#include <cstring> //reviewer additions by Eric Speaker
 
 int main(int argc, char* argv[]) {
 	RBTree *tree = new RBTree();
@@ -49,6 +50,7 @@ int main(int argc, char* argv[]) {
 			std::cout << "File must be a .txt file with each name on a single line." << std::endl;
 			std::cout << "Enter file name or enter Q to return to main menu." << std::endl;
 			std::cin.ignore();
+			char filename_c[1000] = {}; //reviewer added by Eric Speaker
 			std::string filename = "";
 			std::getline(std::cin, filename);
 			if (filename == "Q") {
@@ -56,7 +58,10 @@ int main(int argc, char* argv[]) {
 			}
 			else {
 				std::ifstream file;
-				file.open(filename);
+				//reviewer addition/change by Eric Speaker:
+				strcpy(filename_c, filename.c_str() );
+				file.open(filename_c); //what the line was: file.open(filename);
+				//file.open(filename);
 				if (file.is_open()) {
 					std::string line = "";
 					while (std::getline(file, line)) {
